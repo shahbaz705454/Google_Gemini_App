@@ -71,16 +71,27 @@ const Main = () => {
 
         <div className="main-bottom">
           <div className="search-box">
-            <input onChange={(e)=>{
-              setInput(e.target.value);
-            }} value={input} type="text" placeholder="Enter a prompt here..." />
+             <input
+              onChange={(e)=>{ setInput(e.target.value); }}
+              value={input}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  onSent(); // or onSent(input) if you prefer passing the value explicitly
+                }
+              }}
+              type="text"
+              placeholder="Enter a prompt here..."
+            />
             <div>
               <img src={assets.gallery_icon} alt="" />
               <img src={assets.mic_icon} alt="" />
-              <img onClick={()=>{
+              {
+                input ? <img onClick={()=>{
                 onSent();
               }} src={assets.send_icon} alt="" />
-              
+              : null
+              }
             </div>
           </div>
           <p className="bottom-info">
